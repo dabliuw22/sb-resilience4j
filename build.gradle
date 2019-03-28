@@ -1,0 +1,24 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.leyton'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	maven { 
+		url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' 
+	}
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:0.13.2'
+	implementation 'io.github.resilience4j:resilience4j-metrics:0.13.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
