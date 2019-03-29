@@ -6,4 +6,3 @@ resilience4j:
         wait-duration-in-open-state: 5000
         ring-buffer-size-in-half-open-state: 3
         ring-buffer-size-in-closed-state: 5
-        event-consumer-buffer-size: 10

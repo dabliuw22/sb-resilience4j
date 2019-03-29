@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'io.github.resilience4j:resilience4j-spring-boot2:0.13.2'
 	implementation 'io.github.resilience4j:resilience4j-metrics:0.13.2'
