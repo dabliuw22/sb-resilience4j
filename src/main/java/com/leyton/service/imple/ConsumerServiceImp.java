@@ -1,16 +1,11 @@
 
 package com.leyton.service.imple;
 
-import java.security.SecureRandom;
-import java.util.function.Supplier;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leyton.service.inter.ConsumerService;
 import com.leyton.service.inter.Resilience4jService;
-
-import io.vavr.control.Try;
 
 @Service
 public class ConsumerServiceImp implements ConsumerService {
@@ -19,12 +14,23 @@ public class ConsumerServiceImp implements ConsumerService {
     private Resilience4jService resilience4jService;
 
     @Override
-    public String consumer() {
-        SecureRandom random = new SecureRandom();
-        int i = random.nextInt();
-        Supplier<String> fuction = (i % 2) == 0 ? () -> resilience4jService.success()
-                : () -> resilience4jService.failure();
-        return Try.ofSupplier(fuction).recover(throwable -> consumerFallback(throwable)).get();
+    public String circuitBreaker() {
+        return trySupplier(() -> resilience4jService.circuitBreaker(), this::consumerFallback);
+    }
+
+    @Override
+    public String retry() {
+        return resilience4jService.retry();
+    }
+
+    @Override
+    public String limiter() {
+        return resilience4jService.limiter();
+    }
+
+    @Override
+    public String bulkhead() {
+        return resilience4jService.bulkhead();
     }
 
     private String consumerFallback(Throwable throwable) {

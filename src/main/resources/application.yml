@@ -1,9 +1,36 @@
 resilience4j:
   circuitbreaker:
+    metrics:
+      enabled: true
     backends:
-      resilience4j-service:
+      resilience4j-service-circuit-breaker:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 5000
         ring-buffer-size-in-half-open-state: 3
         ring-buffer-size-in-closed-state: 5
-        event-consumer-buffer-size: 10
+  ratelimiter:
+    limiters:
+      resilience4j-service-limiter:
+        limit-for-period: 5
+        limit-refresh-period-in-millis: 10000
+        timeout-in-millis: 15000
+  #retry:
+    #metrics:
+      #enabled: true
+    #backends:
+      #resilience4j-service-retry:
+        #max-retry-attempts: 2
+        #enable-exponential-backoff: true
+        #exponential-backoff-multiplier: 2
+  #bulkhead:
+    #backends:
+      #resilience4j-service-bulkhead:
+        #max-wait-time: 
+        #max-concurrent-call: 
+        #event-consumer-buffer-size: 
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -19,8 +19,20 @@ public class Resilience4jController {
     private ConsumerService consumerService;
 
     @GetMapping(
-            value = "/hello")
-    public String hello() {
-        return consumerService.consumer();
+            value = "/circuit-breaker")
+    public String circuitBreaker() {
+        return consumerService.circuitBreaker();
+    }
+
+    @GetMapping(
+            value = "/retry")
+    public String retry() {
+        return consumerService.retry();
+    }
+
+    @GetMapping(
+            value = "/limiter")
+    public String limiter() {
+        return consumerService.limiter();
     }
 }

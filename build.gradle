@@ -10,15 +10,14 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-	maven { 
-		url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' 
-	}
 	mavenCentral()
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'io.github.resilience4j:resilience4j-spring-boot2:0.13.2'
-	implementation 'io.github.resilience4j:resilience4j-metrics:0.13.2'
+	implementation 'io.github.resilience4j:resilience4j-metrics:0.14.1'
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:0.14.1'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
