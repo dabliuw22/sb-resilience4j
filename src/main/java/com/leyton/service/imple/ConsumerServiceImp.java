@@ -15,12 +15,12 @@ public class ConsumerServiceImp implements ConsumerService {
 
     @Override
     public String circuitBreaker() {
-        return trySupplier(() -> resilience4jService.circuitBreaker(), this::consumerFallback);
+        return trySupplier(() -> resilience4jService.circuitBreaker(), this::recovery);
     }
 
     @Override
     public String retry() {
-        return resilience4jService.retry();
+        return trySupplier(() -> resilience4jService.retry(), this::recovery);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ConsumerServiceImp implements ConsumerService {
         return resilience4jService.bulkhead();
     }
 
-    private String consumerFallback(Throwable throwable) {
-        return "Fallback: " + throwable.getMessage();
+    private String recovery(Throwable throwable) {
+        return "Recovery: " + throwable.getMessage();
     }
 }

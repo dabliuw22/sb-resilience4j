@@ -11,6 +11,7 @@ import com.leyton.service.inter.Resilience4jService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 
 @Service
 public class Resilience4jServiceImp implements Resilience4jService {
@@ -22,23 +23,15 @@ public class Resilience4jServiceImp implements Resilience4jService {
             name = "resilience4j-service-circuit-breaker")
     public String circuitBreaker() {
         LOGGER.info("resilience4j-service-circuit-breaker...");
-        if (generate() % 2 == 0) {
-            return "Send success...";
-        } else {
-            throw new RuntimeException("Failure...");
-        }
+        return getResult();
     }
 
     @Override
-    // @Retry(
-    // name = "resilience4j-service-retry")
+    @Retry(
+            name = "resilience4j-service-retry")
     public String retry() {
         LOGGER.info("resilience4j-service-retry...");
-        if (generate() % 2 == 0) {
-            return "Success...";
-        } else {
-            throw new RuntimeException("Failure...");
-        }
+        return getResult();
     }
 
     @Override
@@ -54,5 +47,13 @@ public class Resilience4jServiceImp implements Resilience4jService {
     // name = "resilience4j-service-bulkhead")
     public String bulkhead() {
         return "";
+    }
+
+    private String getResult() {
+        if (generate() % 2 == 0) {
+            return "Success...";
+        } else {
+            throw new RuntimeException("Failure...");
+        }
     }
 }

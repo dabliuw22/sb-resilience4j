@@ -14,19 +14,22 @@ resilience4j:
         limit-for-period: 5
         limit-refresh-period-in-millis: 10000
         timeout-in-millis: 15000
-  #retry:
-    #metrics:
-      #enabled: true
-    #backends:
-      #resilience4j-service-retry:
-        #max-retry-attempts: 2
-        #enable-exponential-backoff: true
-        #exponential-backoff-multiplier: 2
+  retry:
+    metrics:
+      enabled: true
+    backends:
+      resilience4j-service-retry:
+        max-retry-attempts: 2
+        wait-duration: 100
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+        - java.lang.RuntimeException
   #bulkhead:
     #backends:
       #resilience4j-service-bulkhead:
-        #max-wait-time: 
-        #max-concurrent-call: 
+        #max-wait-time: 10
+        #max-concurrent-call: 2 
         #event-consumer-buffer-size: 
         
 management:
